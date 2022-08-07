@@ -86,6 +86,6 @@ def dijsktra(graph, initial, end):
     path = path[::-1]
     return path
 
-print(breadth_first_search('A', 'H'))
-print(dijsktra('H'))
+
+
 
