@@ -12,6 +12,18 @@ graph = {
 
 }
 
+graph2 = {
+    'A': {'B': 2, 'C': 1, 'F': 20, 'E': 9, 'D': 3},
+    'B': {'C': 4, 'E': 3},
+    'C': {'D': 8},
+    'D': {'E': 7},
+    'E': {'F': 5},
+    'F': {'G': 2, 'H': 2,},
+    'G': {'H': 6, 'F': 1},
+    'H': {'G': 8, 'F': 9},
+    'I': {}
+        }
+
 
 # finds shortest path between 2 nodes of a graph using BFS
 def breadth_first_search(graph, start, goal):
@@ -77,6 +89,7 @@ def dijsktra(graph, initial, end):
         current_node = min(next_destinations, key=lambda k: next_destinations[k][1])
 
     # Work back through destinations in shortest path
+    cost = shortest_paths[current_node][1]
     path = []
     while current_node is not None:
         path.append(current_node)
@@ -84,8 +97,9 @@ def dijsktra(graph, initial, end):
         current_node = next_node
     # Reverse path
     path = path[::-1]
-    return path
+    return path, cost
 
-
-
-
+print(breadth_first_search(graph, 'A', 'H'))
+pathResults, costResults = dijsktra(graph2, 'A', 'H')
+print(pathResults)
+print(costResults)

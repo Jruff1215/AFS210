@@ -36,11 +36,14 @@ class DoublyLinkedList:
         node = Node(data)
         if (self.head == None):
             self.head = node
+            self.count += 1
             return
         else:
             self.head.prev = node
             node.next = self.head
             self.head = node
+            self.count += 1
+
 
 
     def addLast(self, data) -> None:
@@ -48,13 +51,18 @@ class DoublyLinkedList:
         node = Node(data)
         if(self.head == None):
             self.head = node
+            self.count += 1
+
             return
         else:
             temp = self.head
             while(temp.next != None):
                 temp = temp.next
-                temp.next = node
-                node.prev = temp
+            temp.next = node
+            node.prev = temp
+            self.tail = node
+            self.count += 1
+
   
 
     def addAtIndex(self, data, index):
@@ -63,11 +71,37 @@ class DoublyLinkedList:
         # If index is greater than the length, the data will not be inserted.
         # This function does not replace the data at the index, but pushes everything else down.
         node = Node(data)
-                
-
+        counter = 0
+        if index == self.count:
+            self.addLast(data)
+        elif index > self.count:
+            return "Out of Bounds!"
+        elif index == 0:
+            self.addFirst(data)
+        else:
+            temp = self.head
+            while(temp.next != None and counter < index):
+                temp = temp.next
+                counter += 1
+            next = temp.next
+            temp.next = node
+            node.prev = temp
+            next.prev = node
+            node.next = next
+            self.count += 1
+            # print(temp.data)
+            
     def indexOf(self, data):
         # Search through the list. Return the index position if data is found, otherwise return -1    
         node = Node(data)
+        counter = 0
+        temp = self.head
+        while(temp.next != None and temp.data != data):
+            temp = temp.next
+            counter += 1
+        print(temp.data, counter)
+        return counter
+        
 
 
     def add(self, data) -> None:
@@ -149,6 +183,11 @@ class DoublyLinkedList:
              myStr += str(node)+ " "
         return myStr
 
-
-
-
+dblList = DoublyLinkedList()
+dblList.addLast(1)
+dblList.addLast(2)
+dblList.addLast(3)
+dblList.addLast(4)
+dblList.addAtIndex('A', 1)
+print(dblList.__str__())
+dblList.indexOf('A')
