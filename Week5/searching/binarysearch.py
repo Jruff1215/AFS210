@@ -13,8 +13,6 @@ def binarySearch(list, inputs):
             pointer2 = midPointer - 1
         else:
             pointer1 = midPointer + 1
-        # print(pointer1)
-        # print(pointer2)
 
     if pointer1 > pointer2:
         return False
