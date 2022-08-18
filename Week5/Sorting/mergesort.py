@@ -2,7 +2,7 @@ import math
 
 def mergeSort(nlist):
     print("Splitting ",nlist)
-    # insert your code to complete the mergeSort funct
+    # insert your code to complete the mergeSort function
     point1 = 0
     point2 = len(nlist)
     midPoint = math.floor(point2 / 2)
