@@ -1,5 +1,4 @@
 
-from ctypes import pointer
 
 
 def binarySearch(list, inputs):
