@@ -1,3 +1,5 @@
+from random import randint, shuffle
+
 class Node:
     # A doubly-linked node.
     def __init__(self, data=None):
@@ -12,12 +14,13 @@ class DoublyLinkedList:
         self.tail = None
         self.head = None
         self.count = 0
-
+        self.current = None
+        
     def iter(self):
         # Iterate through the list.
         current = self.head
         while current:
-            val = current.data
+            val = current.data.data
             current = current.next
             yield val
 
@@ -95,7 +98,7 @@ class DoublyLinkedList:
         while(temp.next != None and temp.data != data):
             temp = temp.next
             counter += 1
-        print(temp.data, counter)
+        #print(temp.data, counter)
         return counter
         
 
@@ -142,7 +145,8 @@ class DoublyLinkedList:
         current = self.head
         prev = self.head
         while current:
-            if current.data == data:
+            #print(type(current.data.data))
+            if current.data.data == data:
                 if current == self.tail:
                     prev.next = None
                     self.tail = prev
@@ -163,41 +167,88 @@ class DoublyLinkedList:
         current = self.head
         for n in range(index):
             current = current.next
-        return current.data
+        return current
 
-    def __setitem__(self, index, value):
+    def __setitem__(self, index, newNode):
         if index > self.count - 1:
             raise Exception("Index out of range.")
         current = self.head
         for n in range(index):
             current = current.next
-        current.data = value
-
+        prev = current.prev
+        next = current.next
+        print(prev.data)
+        print(next.data)
+        print(current.data)
+        if prev is not None and next is not None:
+            current = newNode
+        
+            prev.next = current
+            next.prev = current
+            current.prev = prev
+            current.next = next
+        elif prev is not None:
+            prev = self.tail.prev
+            newNode.prev = prev
+            self.tail.prev.next = newNode
+            self.tail = newNode
+        elif next is not None:
+            next = self.head.next
+            newNode.next = next
+            self.head.next.prev = newNode
+            self.head = newNode
+        else:
+            self.head = newNode
+            self.tail = newNode
+            
     def __str__(self):
         myStr = ""
         for node in self.iter():
-             myStr += str(node)+ " "
+             myStr += str(node)+ "\n"
         return myStr
 
-dblList = DoublyLinkedList()
-dblList.addFirst('May')
-dblList.addLast('the')
-dblList.addLast('Force')
-dblList.addLast('be')
-dblList.addLast('with')
-dblList.addLast('you')
-dblList.addLast('!')
+    def shuffle(self):
+            cache = {}
+            shuffledList = []
+            current = self.head
+            
+            for i in range(0, self.count):
+                shuffledList.append(current)
+                current = current.next
+            for i in range(0, len(shuffledList)):
+                if cache.get(str(i)) is None:
+                    new = randint(i, len(shuffledList)-1)
+                    while cache.get(str(new)) is not None:
+                        new = randint(i, len(shuffledList)-1)
 
-dblList.indexOf('with')
-
-dblList.addLast('May')
-dblList.addLast('the')
-dblList.addLast('Force')
-dblList.addLast('be')
-dblList.addLast('with')
-dblList.addLast('you')
-dblList.addLast('!')
-dblList.addAtIndex('us', 11)
-dblList.addAtIndex('all', 12)
-dblList.deleteAtIndex(14)
-print(dblList.__str__())
+                    cache[str(new)] = shuffledList[i]
+                    cache[str(i)] = shuffledList[new]
+                    num1 = shuffledList[i]
+                    num2 = shuffledList[new]
+                # print("num1", num1)
+                # print("num1.data", num1.data)
+                # print("data", num1.data.data)
+                    shuffledList[i] = num2
+                    shuffledList[new] = num1
+            current = None
+            prev = None
+            next = None                       
+            for i in range(0, len(shuffledList)):
+                
+                print(shuffledList[i].data.data)
+                if i == 0:
+                    self.head = shuffledList[i]
+                    self.head.prev = None
+                elif i == 1:
+                    shuffledList[i].prev = self.head
+                    shuffledList[i].next = shuffledList[i+1]
+                    self.head.next = shuffledList[i]
+                elif i == len(shuffledList)-1:
+                    shuffledList[i].prev = shuffledList[i-1]
+                    shuffledList[i].next = None
+                    self.tail = shuffledList[i]
+                else:
+                    shuffledList[i].prev = shuffledList[i-1]
+                    shuffledList[i].next = shuffledList[i+1]
+                    
+                
