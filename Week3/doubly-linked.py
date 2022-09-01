@@ -95,7 +95,8 @@ class DoublyLinkedList:
         while(temp.next != None and temp.data != data):
             temp = temp.next
             counter += 1
-        print(temp.data, counter)
+        # print(temp.data, counter)
+        print(counter)
         return counter
         
 
@@ -181,23 +182,21 @@ class DoublyLinkedList:
 
 dblList = DoublyLinkedList()
 dblList.addFirst('May')
-dblList.addLast('the')
+dblList.add('the')
 dblList.addLast('Force')
 dblList.addLast('be')
 dblList.addLast('with')
 dblList.addLast('you')
 dblList.addLast('!')
+print(dblList)
+print('---------------------------------')
 
 dblList.indexOf('with')
+print('---------------------------------')
 
-dblList.addLast('May')
-dblList.addLast('the')
-dblList.addLast('Force')
-dblList.addLast('be')
-dblList.addLast('with')
-dblList.addLast('you')
-dblList.addLast('!')
-dblList.addAtIndex('us', 11)
-dblList.addAtIndex('all', 12)
-dblList.deleteAtIndex(14)
-print(dblList.__str__())
+dblList.addAtIndex('us', 4)
+dblList.addAtIndex('all', 6)
+dblList.deleteAtIndex(6)
+# print(dblList.__str__())
+print(dblList)
+
