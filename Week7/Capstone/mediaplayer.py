@@ -76,6 +76,7 @@ while True:
     elif choice == 2:
         # Prompt user for Song Title 
         deleteSong = input('Enter the song title: ')
+        deleteSong = deleteSong.capitalize()
         #print(deleteSong)
         songList.delete(deleteSong)
         # remove song from playlist
